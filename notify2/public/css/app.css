@@ -10,7 +10,9 @@ body {
 }
 
 input, button {
-    appearance: none;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
 }
 
 input {
@@ -92,4 +94,5 @@ h1 {
     font-weight: 500;
     color: rebeccapurple;
 }
+
 

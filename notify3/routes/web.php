@@ -1,6 +1,9 @@
 <?php
 
+use App\Events\ChatEvent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +19,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::post('send', function(Request $request){
+    $request->validate([
+        'name' => 'required',
+        'message' => 'required'
+    ]);
+
+    $message = [
+        'name' => $request->name,
+        'message' => $request->message,
+    ];
+
+    ChatEvent::dispatch($message);
+})->name('send');

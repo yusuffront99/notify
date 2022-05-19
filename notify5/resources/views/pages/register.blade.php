@@ -10,7 +10,7 @@
                             <h4 class="text-center">Account Register</h4>
                         </div>
                         <div class="card-body">
-                            <form id="form-register">
+                            <form id="form-register" method="POST">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Username</label>
@@ -67,28 +67,29 @@
                 var password = $("#password").val();
     
                 $.ajax({
-                    type: 'POST',
-                    url: '{{route('')}',
-                    data: $('#form-register').serialize(),
-                    success:function(data) {
-                        if (data.exists) {
-                            $('#notifDiv').fadeIn();
-                            $('#notifDiv').css('background', 'red');
-                            $('#notifDiv').text('Email already exists');
-                            setTimeout(() => {
-                                $('#notifDiv').fadeOut();
-                            }, 3000);
-                        } else if (data.success) {
+                    type: "POST",
+                    url: "store_register",
+                    data: $("#form-register").serialize(),
+                    success:function(data){
+                        if(data.success){
                             $('#notifDiv').fadeIn();
                             $('#notifDiv').css('background', 'green');
                             $('#notifDiv').text(data.success);
                             setTimeout(() => {
                                 $('#notifDiv').fadeOut();
                             }, 3000);
-                            $('[name="fname"]').val('');
-                            $('[name="lname"]').val('');
+                            $('[name="name"]').val('');
                             $('[name="email"]').val('');
                             $('[name="password"]').val('');
+                            
+                        } else if(data.exists) {
+                            $('#notifDiv').fadeIn();
+                            $('#notifDiv').css('background', 'red');
+                            $('#notifDiv').text('Email already exists');
+                            setTimeout(() => {
+                                $('#notifDiv').fadeOut();
+                            }, 3000);
+                            $('#password').val('');
                         } else {
                             $('#notifDiv').fadeIn();
                             $('#notifDiv').css('background', 'red');
@@ -97,10 +98,10 @@
                                 $('#notifDiv').fadeOut();
                             }, 3000);
                         }
-                    $(this).text('Save');
-                    $(this).removeAttr('disabled');
-                    }.bind($(this))
-                    });
+                        $(this).text('Save');
+                        $(this).removeAttr('disabled');
+                            }.bind($(this))
+                });       
             });
         });
     </script>

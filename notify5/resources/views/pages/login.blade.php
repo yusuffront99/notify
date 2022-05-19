@@ -31,12 +31,12 @@
   </section>
 @endsection
 
-{{-- 
+
 
 @push('javascript')
 <script>
     $(document).ready(function() {
-        $("#loginBtn").click(function(e) {
+        $("#loginBtn").click((e)=> {
   
             $.ajaxSetup({
                 headers: {
@@ -64,7 +64,7 @@
                     setTimeout(() => {
                         $('#notifDiv').fadeOut();
                     }, 3000);
-                    window.location = "{{ route('dashboard') }}";
+                    window.location = "{{route('dashboard')}}"
                   } else if(data.verify_email) {
                       $('#notifDiv').fadeIn();
                        $('#notifDiv').css('background', 'red');
@@ -89,4 +89,4 @@
 </script>
 @endpush
 
- --}}
+

@@ -15,4 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::post('/user_login', [UserController::class, 'user_login'])->name('user_login');
+
 Route::get('/register', [UserController::class, 'register'])->name('register');
+Route::post('/store_register', [UserController::class, 'store_register'])->name('store_register');
+
+Route::group(['middleware' => 'auth.user'], function () {
+    Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
+});

@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function login(){
-        return view('pages.login');
-    }
 
     public function register()
     {
@@ -32,5 +30,27 @@ class UserController extends Controller
 
         $user->save();
         return response()->json(['success' => 'User Registered Successfully']);
+    }
+
+    public function login(){
+        return view('pages.login');
+    }
+
+    public function user_login(Request $request){
+        
+        if (Auth::attempt([
+            'email' => $request->input('email'),
+            'password' => $request->input('password')])) {
+            $user = Auth()->user();
+                return response()->json(['success' => 'Successfully Logged In']);
+ 
+        } else {
+            return response()->json(['error'=> 'Something went wrong']);
+        }
+    }
+
+    public function dashboard()
+    {
+        return view('dashboard');
     }
 }

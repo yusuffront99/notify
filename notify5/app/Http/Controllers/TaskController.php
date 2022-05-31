@@ -35,7 +35,10 @@ class TaskController extends Controller
             $options
         );
 
-        $data = ['user_id' => $id];
+        $data = [
+            'user_id' => $id,
+            'notes' => $report->note
+        ];
         $pusher->trigger('my-channel', 'my-event', $data);
 
         if($task->save()){

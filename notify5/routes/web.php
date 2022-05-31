@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +24,5 @@ Route::post('/store_register', [UserController::class, 'store_register'])->name(
 Route::group(['middleware' => 'auth.user'], function () {
     Route::get('/', [UserController::class, 'dashboard'])->name('dashboard');
 });
+
+Route::post('save_task', [TaskController::class, 'save_task']);

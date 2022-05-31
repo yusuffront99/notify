@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Pusher\Pusher;
 use App\Models\Task;
 use App\Models\Report;
 use Illuminate\Http\Request;
@@ -21,6 +22,21 @@ class TaskController extends Controller
         $id = $report->user_id;
         $report->note = $title;
         $report->save();
+
+        $options = array(
+            'cluster' => 'ap1',
+            'useTLS' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+
+        $data = ['user_id' => $id];
+        $pusher->trigger('my-channel', 'my-event', $data);
 
         if($task->save()){
             return response()->json([
